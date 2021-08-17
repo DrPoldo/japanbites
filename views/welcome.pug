@@ -1,0 +1,8 @@
+extends layout
+
+block layout-content
+  div.View.Welcome
+    h1.Banner Welcome Back, #{userProfile.nickname}!
+    div.NavButtons
+      a(href="/logout")
+        div.NavButton Log out

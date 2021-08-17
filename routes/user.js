@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
+const Db = require('../db');
+const db = new Db();
+
 const secured = (req, res, next) => {
     if (req.user) {
       return next();
@@ -11,10 +14,37 @@ const secured = (req, res, next) => {
 
   router.get("/user", secured, (req, res, next) => {
     const { _raw, _json, ...userProfile } = req.user;
-    res.render("user", {
-      title: "Profile",
-      userProfile: userProfile
-    });
+
+    db.userProfileExists(userProfile.id, (error, results, fields) => {
+      if(error){
+        next(error);
+        return;
+      }
+        //throw error;
+
+      if(results && results[0]){
+        res.render("welcome", {
+          title: "Welcome",
+          userProfile: userProfile
+        });
+      }
+      else{
+        db.addUserProfile(userProfile, (error, results, fields) => {
+          if(error){
+            next(error);
+            return;
+          }
+            if(results){
+              res.render("user", {
+                title: "Profile",
+                userProfile: userProfile
+              });  
+            }
+        });
+      }
+
+
+    });    
   });
 
   module.exports = router;
