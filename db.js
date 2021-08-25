@@ -41,6 +41,10 @@ class Db{
         */
         this.connection.query("select 1 from users where id = ?", [userId], callback)
     }
+
+    getDishes(callback){
+        this.connection.query("select * from dishes", callback);
+    }
 }
 
 module.exports = Db;

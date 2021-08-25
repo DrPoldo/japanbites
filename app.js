@@ -11,6 +11,8 @@ const Auth0Strategy = require("passport-auth0");
 require("dotenv").config();
 
 var indexRouter = require('./routes/index');
+var menuRouter = require('./routes/menu');
+var homeRouter = require('./routes/homepage');
 var userRouter = require('./routes/user');
 var authRouter = require('./routes/auth');
 
@@ -97,6 +99,8 @@ const secured = (req, res, next) => {
 };
 
 app.use('/', indexRouter);
+app.use('/', menuRouter);
+//app.use('/', homeRouter);
 app.use('/', authRouter);
 app.use('/', userRouter);
 

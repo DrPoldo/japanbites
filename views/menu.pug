@@ -1,0 +1,7 @@
+extends layout
+
+block layout-content
+    ul
+    each row in results 
+        li
+            h1 #{row.name} - #{row.description}
